@@ -6,6 +6,8 @@ export interface LoginRequest {
 export interface LoginResponse {
   access_token: string;
   token_type: string;
+    username: string;
+    image_url: string;
 }
 
 export const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {

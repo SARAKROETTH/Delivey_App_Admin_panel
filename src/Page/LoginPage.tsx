@@ -2,6 +2,9 @@ import { Eye, EyeClosed, LockIcon, Mail } from "lucide-react";
 import { useState } from "react";
 import { loginApi } from "../Hooks/useFetch";
 
+import { useAuth } from "../Contexts/AuthContext";
+
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,6 +14,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
 
 
+  const { login } = useAuth()
 
 
 
@@ -43,12 +47,14 @@ export default function LoginPage() {
         setLoading(false);
       const res = await loginApi({ email, password });
 
-      // save token
-      localStorage.setItem("token", res.access_token);
+      login(res.access_token,{name:res.username,image:res.image_url})
+
 
       console.log("Login success:", res);
 
       window.location.href = "/admin";
+
+
     } catch (error) {
       console.error("Login error:", error);
       alert("Invalid credentials");
